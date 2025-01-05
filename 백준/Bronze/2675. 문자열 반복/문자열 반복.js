@@ -1,7 +1,7 @@
 const input = require('fs').readFileSync(0, 'utf-8').trim().split('\n');
 
 const stringList = input.slice(1);
-stringList.map((item) => {
+stringList.forEach((item) => {
     const [multipleNumber, string] = item.split(' ');
     const repeatedString = string
         .split('')
