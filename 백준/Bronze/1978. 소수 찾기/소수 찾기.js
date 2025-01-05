@@ -1,16 +1,20 @@
 const input = require('fs').readFileSync(0, 'utf-8').trim().split('\n');
 const [inputCount, numberList] = input;
 
-let count = 0;
+const isPrime = (x) => {
+    if (x < 2) return false;
+    for (let i = 2; Math.sqrt(x) >= i; i++) {
+        if (x % i === 0) return false;
+    }
+    return true;
+};
+
+let result = 0;
 numberList
     .split(' ')
     .map((item) => Number(item))
-    .forEach((number) => {
-        let judgeDecimal = 0;
-        for (let i = 0; i <= number; i++) {
-            if (number % i === 0) judgeDecimal += 1;
-        }
-        if (judgeDecimal === 2) count += 1;
+    .forEach((item) => {
+        if (isPrime(item)) result += 1;
     });
 
-console.log(count);
+console.log(result);
