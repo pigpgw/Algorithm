@@ -24,7 +24,7 @@ const dfs = (count) => {
 };
 
 dfs(0);
-// 정렬을 모든 원소를 기준으로 수행
+
 result.sort((a, b) => {
     for (let i = 0; i < a.length; i++) {
         if (a[i] !== b[i]) return a[i] - b[i];
@@ -32,5 +32,4 @@ result.sort((a, b) => {
     return 0;
 });
 
-// 결과 출력
 result.forEach((list) => console.log(list.join(' ')));
