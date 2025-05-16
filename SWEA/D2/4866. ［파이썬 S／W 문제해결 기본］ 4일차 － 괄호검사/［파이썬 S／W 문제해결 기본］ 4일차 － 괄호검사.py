@@ -41,32 +41,18 @@ T = int(input())
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
 for test_case in range(1, T + 1):
     text = list(input())
-    g_list = ['(','[','{',')',']','}']
-    result = ""
-    for s in text:
-        if s in g_list:
-            result += s
-    result = list(result)
     stack = []
-    real = 1
-    closed_par =  [')',']','}']
-    for s in result:
-        if len(stack) == 0 and s in closed_par:
-            real = 0
-            break
-        if s not in closed_par:
+    valid = 1
+    paris = {')':'(','}':'{',']':'['}
+    for s in text:
+        if s in '({[':
             stack.append(s)
-        if s in closed_par:
-            if s == ')' and  stack.pop() != "(":
-                real = 0
+        elif s in ')}]':
+            if not stack or stack.pop() != paris[s]:
+                valid = 0
                 break
-            elif s == ']' and  stack.pop() != "[":
-                real = 0
-                break
-            elif s == '}' and  stack.pop() != "{":
-                real = 0
-                break
-    if len(stack) != 0:
-        real = 0
-    print(f'#{test_case} {real}')
+    if stack:
+        valid = 0
+    
+    print(f'#{test_case} {valid}')
         
