@@ -56,14 +56,14 @@ for test_case in range(1, T + 1):
     def bfs(start_node):
         visited = [False] * (V + 1)
         queue = deque()
-        queue.append((start_node,1))
+        queue.append((start_node,0))
         visited[start_node] = True
         while len(queue) > 0:
             curr_node,depth = queue.popleft()
             for node in graph[curr_node]:
                 if not visited[node]:
                     if node == G:
-                        return depth
+                        return depth + 1
                     visited[node] = True
                     queue.append((node,depth + 1))
         return 0
