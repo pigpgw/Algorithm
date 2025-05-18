@@ -36,23 +36,20 @@ print(f)                                문자열 1개 출력하는 예제
       단, 채점을 위해 코드를 제출하실 때에는 반드시 아래 구문을 지우거나 주석 처리 하셔야 합니다.
 '''
 #sys.stdin = open("input.txt", "r")
+from collections import deque
 
 T = int(input())
 
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
-
-
-
-
+dx = [1, 0, -1, 0]
+dy = [0, -1, 0, 1]
 
 for test_case in range(1, T + 1):
-    dx = [1,0,-1,0]
-    dy = [0,-1,0,1]
     N = int(input())
     board = []
     visited = [[False] * N for _ in range(N)]
-    travel_start_x,travel_start_y = [0,0]
-    travel_arrive_x, travel_arrive_y = [0,0]
+    start  = (0,0)
+    end = (0,0)
 
     for i in range(N):
         row = list(map(int,list(input())))
@@ -61,27 +58,23 @@ for test_case in range(1, T + 1):
     for i in range(N):
         for j in range(N):
             if board[i][j] == 2:
-                travel_start_x, travel_start_y = [j,i]
+                start = (i,j)
             if board[i][j] == 3:
-                travel_arrive_x, travel_arrive_y = [j,i]
+                end = (i,j)
 
     def dfs(start):
-        queue = []
+        queue = deque()
         start_y,start_x = start
         visited[start_y][start_x] = True
         queue.append([start_y,start_x])
         while len(queue) > 0:
-            curr_y,curr_x = queue.pop(0)
+            curr_y, curr_x = queue.popleft()
             for i in range(4):
                 x = curr_x + dx[i]
                 y = curr_y + dy[i]
                 if y <= N -1  and y >= 0 and x >= 0 and x <= N-1:
                     if board[y][x] != 1 and not visited[y][x]:
                         visited[y][x] = True
-                        queue.append([y,x])
-    dfs([travel_start_y,travel_start_x])
-    print(f'#{test_case} {1 if visited[travel_arrive_y][travel_arrive_x] else 0}')
-
-
-
-
+                        queue.append((y,x))
+    dfs([start[0],start[1]])
+    print(f'#{test_case} {1 if visited[end[0]][end[1]] else 0}')
