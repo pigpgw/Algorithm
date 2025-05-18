@@ -52,6 +52,8 @@ for test_case in range(1, T + 1):
         graph[line1].append(line2)
         graph[line2].append(line1)
     S,G = list(map(int,input().split()))
+    
+        
 
     def bfs(start_node):
         visited = [False] * (V + 1)
@@ -68,5 +70,7 @@ for test_case in range(1, T + 1):
                     queue.append((node,depth + 1))
         return 0
 
-
-    print(f'#{test_case} {bfs(S)}')
+    if S == G:
+        print(f'#{test_case} {0}')
+    else:
+        print(f'#{test_case} {bfs(S)}')
