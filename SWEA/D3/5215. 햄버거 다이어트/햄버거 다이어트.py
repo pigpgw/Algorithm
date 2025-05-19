@@ -47,16 +47,15 @@ for test_case in range(1, T + 1):
         numbers = list(map(int,input().split()))
         ingre_list.append(numbers)
     max_score = -1
-
-    def combination(start,reduce_col,reduce_score):
+    def combination(start,reduce_score,reduce_cal):
         global max_score
-        if reduce_col >= limit_cal:
+        if reduce_cal > limit_cal:
             return
-        if reduce_score > max_score:
-            max_score = max(reduce_score,max_score)
+        if max_score < reduce_score:
+            max_score = max(max_score,reduce_score)
         for i in range(start,len(ingre_list)):
-            flavor_score,col = ingre_list[i]
-            if reduce_col + col <= limit_cal:
-                combination(i + 1, reduce_col + col, reduce_score + flavor_score)
+            curr_ingre_score,curr_ingre_cal = ingre_list[i]
+            if curr_ingre_cal + reduce_cal <= limit_cal:
+                combination(i + 1, reduce_score + curr_ingre_score, reduce_cal + curr_ingre_cal)
     combination(0,0,0)
     print(f'#{test_case} {max_score}')
