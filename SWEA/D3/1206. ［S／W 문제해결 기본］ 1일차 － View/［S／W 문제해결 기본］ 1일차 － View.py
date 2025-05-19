@@ -40,14 +40,16 @@ T = 10
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
 for test_case in range(1, T + 1):
     N = int(input())
-    input_list = list(map(int,input().split()))
-    result = 0
-    for i in range(2,N-2):
-        curr_com = input_list[i]
-        max_com = 0
-        for j in range(i - 2,i + 3):
-            if i != j:
-                max_com= max(max_com,input_list[j])
-        if curr_com > max_com:
-            result += curr_com - max_com
-    print(f'#{test_case} {result}')
+    heights = list(map(int,input().split()))
+    view_count = 0
+    for i in range(2,N - 2):
+        left_2 = heights[i - 2]
+        left_1 = heights[i - 1]
+        right_1 = heights[i + 1]
+        right_2 = heights[i + 2]
+        max_neighbor = max(left_2,left_1,right_1,right_2)
+        if heights[i] > max_neighbor:
+            view_count += heights[i] - max_neighbor
+
+
+    print(f'#{test_case} {view_count}')
