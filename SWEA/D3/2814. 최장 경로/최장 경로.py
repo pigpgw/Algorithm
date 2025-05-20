@@ -52,11 +52,12 @@ for test_case in range(1, T + 1):
         result = max(result, depth)
         for node in graph[start]:
             if not visited[node]:
-                visited[start] = True
+                visited[node] = True
                 dfs(node, depth + 1,visited)
-                visited[start] = False
+                visited[node] = False
 
     for i in range(1, N + 1):
         visited = [False] * (N + 1)
+        visited[i] = True 
         dfs(i, 1,visited)
     print(f'#{test_case} {result}')
