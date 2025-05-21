@@ -36,24 +36,28 @@ print(f)                                문자열 1개 출력하는 예제
 #import sys
 #sys.stdin = open("input.txt", "r")
 
+
+code_dict = {
+    '0001101': 0,
+    '0011001': 1,
+    '0010011': 2,
+    '0111101': 3,
+    '0100011': 4,
+    '0110001': 5,
+    '0101111': 6,
+    '0111011': 7,
+    '0110111': 8,
+    '0001011': 9,
+}
+
+def decode(bits):
+    return code_dict[''.join(map(str,bits))]
+
 T = int(input())
 for test_case in range(1, T + 1):
     N,M = list(map(int,input().split()))
-    board = []
-    for _ in range(N):
-        board.append(list(map(int,list(input()))))
-    code_dict = {
-        '0001101': 0,
-        '0011001': 1,
-        '0010011': 2,
-        '0111101': 3,
-        '0100011': 4,
-        '0110001': 5,
-        '0101111': 6,
-        '0111011': 7,
-        '0110111': 8,
-        '0001011': 9,
-    }
+    board = [list(map(int,list(input()))) for _ in range(N)]
+
     password = []
     encode = []
     for i in range(N):
@@ -61,20 +65,14 @@ for test_case in range(1, T + 1):
             if board[i][j] == 1:
                 encode = board[i][j - 55:j + 1]
                 break
-        if len(encode) > 0:
+        if encode:
             break
     array = []
     for code in encode:
         array.append(code)
         if len(array) == 7:
-            password.append(code_dict[''.join(list(map(str,array)))])
+            password.append(decode(array))
             array = []
-    result = 0
-    odd = 0
-    for i in range(len(password)):
-        if i % 2 == 0:
-            odd += password[i]
-        else:
-            result += password[i]
-    result += (odd  * 3)
-    print(f'#{test_case} {sum(password) if result %  10 == 0 else 0}')
+    valid = (sum(password[::2]) * 3 + sum(password[1::2])) % 10 == 0
+    print(f'#{test_case} {sum(password) if valid else 0}')
+
