@@ -42,12 +42,15 @@ for test_case in range(1, T + 1):
     decode = list(input().split())
     order_count = int(input())
     order_list = list(input().split())
+    
     for i in range(order_count):
-        _ = order_list.pop(0)
-        x = int(order_list.pop(0))
-        y = int(order_list.pop(0))
-        s = []
-        for j in range(y):
-            s.append(order_list.pop(0))
-        decode[x:x] = s
+        _ = order_list.pop(0)             # 'I'
+        x = int(order_list.pop(0))        # 삽입 위치
+        y = int(order_list.pop(0))        # 삽입 개수
+        s = [order_list.pop(0) for _ in range(y)]
+
+        # 슬라이싱 대신, 뒤에서부터 insert
+        for val in reversed(s):
+            decode.insert(x, val)
+
     print(f'#{test_case} {" ".join(decode[:10])}')
