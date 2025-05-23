@@ -1,14 +1,16 @@
 from  itertools import permutations
 def solution(k, dungeons):
-    answer = -1
     n = len(dungeons)
-    for order in permutations(range(n)):
-        cur = k
-        local_ans = 0
-        for t in order:
-            require,consume = dungeons[t]
-            if cur >= require:
-                cur -= consume
-                local_ans += 1
-        answer = max(answer,local_ans)
-    return answer
+    max_valid_advanture = 0
+    def backtrack(fatigue,path):
+        nonlocal max_valid_advanture
+        max_valid_advanture = max(max_valid_advanture,len(path))
+        
+        for i in range(n):
+            dungeons_need_fatigue,after_dungeons_fatigue = dungeons[i]
+            if i not in path and fatigue >= dungeons_need_fatigue:
+                path.append(i)
+                backtrack(fatigue - after_dungeons_fatigue,path)
+                path.pop()
+    backtrack(k,[])
+    return max_valid_advanture
