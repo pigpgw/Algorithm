@@ -1,6 +1,12 @@
-const input = require('fs').readFileSync('/dev/stdin').toString().trim().split('\n');
-const measureCount = input[0];
-const measureList = input[1].split(' ');
+const fs = require('fs');
+let input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
 
-// 약수 개수와 자리수로 N 구하기
-console.log(measureList.length !== 1 ? Math.max(...measureList) * Math.min(...measureList) : measureList[0] ** 2);
+const count = Number(input[0]);
+const arr = input[1].split(' ').sort((a, b) => a - b);
+const firstnum = Number(arr[0]);
+const lastnum = Number(arr[count - 1]);
+let result = 0;
+
+arr.length >= 2 ? (result = firstnum * lastnum) : (result = firstnum * firstnum);
+
+console.log(result);
