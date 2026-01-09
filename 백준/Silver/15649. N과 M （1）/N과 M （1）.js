@@ -1,25 +1,24 @@
-let input = require('fs').readFileSync('/dev/stdin').toString().trim();
+const fs = require('fs');
+const [N, M] = fs.readFileSync('/dev/stdin').toString().trim().split(' ').map(Number);
 
-const [n, m] = input.split(' ').map(Number);
-let result = '';
-const seq = [];
-const visited = Array(n + 1).fill(false);
+const visited = Array(N + 1).fill(false);
+const array = [];
 
-const dfs = (k) => {
-    if (k === m) {
-        result += `${seq.join(' ')}\n`;
+const dfs = (depth) => {
+    if (depth === M) {
+        console.log(array.join(' '));
         return;
     }
-    for (let i = 1; i <= n; i++) {
-        if (visited[i]) continue;
 
-        visited[i] = true;
-        seq.push(i);
-        dfs(k + 1);
-        seq.pop();
-        visited[i] = false;
+    for (let i = 1; i <= N; i++) {
+        if (!visited[i]) {
+            array.push(i);
+            visited[i] = true;
+            dfs(depth + 1);
+            visited[i] = false;
+            array.pop();
+        }
     }
 };
 
 dfs(0);
-console.log(result);
