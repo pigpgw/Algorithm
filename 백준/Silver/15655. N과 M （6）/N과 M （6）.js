@@ -1,32 +1,22 @@
-let input = require('fs').readFileSync('/dev/stdin').toString().trim().split('\n');
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+const [N, M] = input[0].split(' ').map(Number);
+const N_list = input[1].split(' ').map(Number);
 
-const [n, m] = input[0].split(' ').map(Number);
-const numberList = input[1]
-    .split(' ')
-    .map(Number)
-    .sort((a, b) => a - b);
-const result = [];
-const seq = [];
-const visited = Array(n).fill(false);
+N_list.sort((a, b) => a - b);
 
-const dfs = (count) => {
-    if (count === m) {
-        result.push(seq.join(' '));
+const arr = [];
+
+const dfs = (curr) => {
+    if (arr.length === M) {
+        console.log(arr.join(' '));
         return;
     }
-
-    numberList.forEach((number, i) => {
-        if (!visited[i] && Math.max(...seq) < number) {
-            visited[i] = true;
-            seq.push(number);
-            dfs(count + 1);
-            seq.pop();
-            visited[i] = false;
-        }
-    });
+    for (let i = curr; i < N; i++) {
+        arr.push(N_list[i]);
+        dfs(i + 1);
+        arr.pop();
+    }
 };
 
 dfs(0);
-result.forEach((list) => {
-    console.log(list);
-});
