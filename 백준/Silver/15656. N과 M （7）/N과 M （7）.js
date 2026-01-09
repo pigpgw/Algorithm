@@ -1,23 +1,23 @@
-const fs = require("fs");
-const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+const [N, M] = input[0].split(' ').map(Number);
+const N_list = input[1].split(' ').map(Number);
 
-const [n, m] = input[0].split(" ").map(Number);
-const numberList = input[1].split(" ").map(Number).sort((a, b) => a - b); // 숫자로 변환 후 정렬
-const seq = [];
-const result = [];
+N_list.sort((a, b) => a - b);
 
-const dfs = (count) => {
-    if (count === m) {
-        result.push(seq.join(" ")); // ✅ 배열에 저장
+const arr = [];
+let output = '';
+const dfs = () => {
+    if (arr.length === M) {
+        output += arr.join(' ') + '\n';
         return;
     }
-
-    for (let i = 0; i < n; i++) {
-        seq.push(numberList[i]);
-        dfs(count + 1);
-        seq.pop();
+    for (let i = 0; i < N; i++) {
+        arr.push(N_list[i]);
+        dfs(i + 1);
+        arr.pop();
     }
 };
 
 dfs(0);
-console.log(result.join("\n")); // ✅ 한 번만 출력
+console.log(output);
