@@ -1,35 +1,31 @@
-let input = require('fs').readFileSync('/dev/stdin').toString().trim().split('\n');
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+const [N, M] = input[0].split(' ').map(Number);
+const N_list = input[1].split(' ').map(Number);
 
-const [n, m] = input[0].split(' ').map(Number);
-const numberList = input[1].split(' ').map(Number);
+N_list.sort((a, b) => a - b);
+
 const result = [];
-const seq = [];
-const visited = Array(n).fill(false);
+const visited = Array(N).fill(false);
 
-const dfs = (count) => {
-    if (count === m) {
-        result.push([...seq]);
+const dfs = (arr) => {
+    if (arr.length === M) {
+        result.push([...arr]);
         return;
     }
 
-    numberList.forEach((number, i) => {
-        if (!visited[i]) {
-            visited[i] = true;
-            seq.push(number);
-            dfs(count + 1);
-            seq.pop();
-            visited[i] = false;
-        }
-    });
+    for (let i = 0; i < N; i++) {
+        if (visited[i]) continue;
+
+        visited[i] = true;
+        arr.push(N_list[i]);
+        dfs(arr);
+        arr.pop();
+        visited[i] = false;
+    }
 };
 
-dfs(0);
-
-result.sort((a, b) => {
-    for (let i = 0; i < a.length; i++) {
-        if (a[i] !== b[i]) return a[i] - b[i];
-    }
-    return 0;
+dfs([]);
+result.map((item) => {
+    console.log(item.join(' '));
 });
-
-result.forEach((list) => console.log(list.join(' ')));
