@@ -3,34 +3,28 @@ const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
 
 const N = Number(input[0]);
 const board = input.slice(1).map((item) => item.split(' ').map(Number));
-const visited = Array.from({ length: N }, () => false);
+const visited = Array(N).fill(false);
 
 let result = Infinity;
 
-const dfs = (start, curr, arr, visited) => {
-    if (arr.length === N - 1) {
+const dfs = (start, curr, count, cost) => {
+    if (cost >= result) return;
+    if (count === N) {
         if (board[curr][start] !== 0) {
-            const sum = arr.reduce((acc, cur) => acc + cur, 0) + board[curr][start];
-            result = Math.min(result, sum);
+            result = Math.min(result, cost + board[curr][start]);
         }
         return;
     }
 
     for (let i = 0; i < N; i++) {
-        if (visited[i]) continue;
-        if (board[curr][i] === 0) continue;
+        if (visited[i] || board[curr][i] === 0) continue;
         visited[i] = true;
-        arr.push(board[curr][i]);
-        dfs(start, i, arr, visited);
+        dfs(start, i, count + 1, cost + board[curr][i]);
         visited[i] = false;
-        arr.pop();
     }
 };
 
-for (let i = 0; i < N; i++) {
-    visited[i] = true;
-    dfs(i, i, [], visited);
-    visited[i] = false;
-}
+visited[0] = true;
+dfs(0, 0, 1, 0);
 
 console.log(result);
