@@ -1,13 +1,14 @@
 const fs = require('fs');
-let input = fs.readFileSync('/dev/stdin').toString().trim();
-const N = Number(input);
+const N = Number(fs.readFileSync('/dev/stdin').toString().trim());
 
-const dp = new Array(N + 1).fill(9999);
+const dp = Array(10 ** 6).fill(Infinity);
+
 dp[1] = 0;
-dp[2] = 1;
-for (let i = 1; i <= N; i++) {
-    if (i % 3 === 0) dp[i] = Math.min(dp[i], dp[Math.floor(i / 3)] + 1);
-    if (i % 2 === 0) dp[i] = Math.min(dp[i], dp[Math.floor(i / 2)] + 1);
-    dp[i] = Math.min(dp[i], dp[i - 1] + 1);
+
+for (let i = 2; i < N + 1; i++) {
+    dp[i] = dp[i - 1] + 1;
+    if (i % 2 === 0) dp[i] = Math.min(dp[i], dp[i / 2] + 1);
+    if (i % 3 === 0) dp[i] = Math.min(dp[i], dp[i / 3] + 1);
 }
+
 console.log(dp[N]);
