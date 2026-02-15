@@ -1,10 +1,13 @@
 const fs = require('fs');
-let input = fs.readFileSync('/dev/stdin').toString().trim();
+const input = fs.readFileSync(0, 'utf8').trim();
 
-const result = [];
-for (let i = 0; input.length > i; i++) {
+let result = [];
+
+for (let i = 0; i < input.length; i++) {
     result.push(input.slice(i));
 }
-for (const item of result.sort()) {
-    console.log(item);
+
+result = result.sort();
+for (const list of result) {
+    console.log(list);
 }
