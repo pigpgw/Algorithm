@@ -8,7 +8,7 @@ function solution(prices) {
         // 이후 가격들을 순차적으로 확인한다.(남은 배열개수만큼 근데 떨어지면 종료)
         let count = 0
         for (let i = head; i < prices.length; i++){
-            if (prices.length > 0) count++
+            count++
             if (poped > prices[i]) break
         }
         result.push(count)
