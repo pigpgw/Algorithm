@@ -1,17 +1,19 @@
 function solution(prices) {
-    // 값 저장할것 필요
-    const result = []
-    let head = 0
-    while (prices.length > head){
-        // 앞에서 뽑는다.
-        const poped = prices[head++]
-        // 이후 가격들을 순차적으로 확인한다.(남은 배열개수만큼 근데 떨어지면 종료)
-        let count = 0
-        for (let i = head; i < prices.length; i++){
-            count++
-            if (poped > prices[i]) break
+    const n = prices.length
+    const result = Array(n).fill(0)
+    const stack = []
+    
+    for (let i =0; i < n; i++){
+        while(stack.length && prices[i] < prices[stack[stack.length - 1]]){
+            const poped = stack.pop()
+            result[poped] = i - poped
         }
-        result.push(count)
+        stack.push(i)
+    }
+    
+    while (stack.length){
+        const poped = stack.pop()
+        result[poped] = n-poped - 1
     }
     return result
 }
