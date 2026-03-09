@@ -1,30 +1,31 @@
 function solution(numbers) {
     const visited = new Array(numbers.length).fill(false)
-    const minority = new Set()
+    const primes = new Set()
     
-    const isMinority = (arr) => {
-        const number = Number(arr.join(""))
-        if (number === 0 || number === 1) return false 
-        for (let i = 2; i <= Math.sqrt(number); i++){
-            if (number % i === 0) return false
+    const isPrime = (num) => {
+        if (num < 2) return false 
+        for (let i = 2; i <= Math.sqrt(num); i++){
+            if (num % i === 0) return false
         }
         return true
     }
     
-    const backtrack = (arr) => {
-        if (arr.length === numbers.length){
-            return
-        }
+    const backtrack = (current) => {
+        if (isPrime(current)) primes.add(current)
+        
         for (let i = 0; i < numbers.length; i++){
             if (visited[i]) continue
-            arr.push(numbers[i])
+            
             visited[i] = true
-            if (isMinority(arr)) minority.add(Number(arr.join("")))
-            backtrack(arr)
+            backtrack(current*10 + Number(numbers[i]))
             visited[i] = false
-            arr.pop()
         }
     }
-    backtrack([])
-    return  [...minority].length
+    
+    for (let i = 0; i < numbers.length; i++){
+        visited[i] = true
+        backtrack(Number(numbers[i]))
+        visited[i] = false
+    }
+    return primes.size
 }
