@@ -1,8 +1,6 @@
-n = int(input())
+s = int(input())
 
-def factorial(number):
-    if number <= 1:
-        return 1
-    return number * factorial(number - 1)
-
-print(factorial(n))
+def facto(num):
+    if num < 2: return 1
+    return num * facto(num - 1)
+print(facto(s))
