@@ -8,24 +8,20 @@ let result = false
 
 const dy = [0, -1, 0, 1]
 const dx = [-1, 0, 1, 0]
-const dfs = (prev, color) => {
-    const y = prev[prev.length - 1][0]
-    const x = prev[prev.length - 1][1]
+const dfs = (startY, startX, depth, currY, currX, color) => {
     for (let i = 0; i < 4; i++) {
-        const ny = y + dy[i]
-        const nx = x + dx[i]
+        const ny = currY + dy[i]
+        const nx = currX + dx[i]
         if (ny >= N || ny < 0 || nx >= M || nx < 0) continue
         if (board[ny][nx] !== color) continue
 
-        if (prev.length >= 4 && prev[0][0] === ny && prev[0][1] === nx) {
+        if (depth >= 4 && startY === ny && startX === nx) {
             result = true
             return
         }
         if (visited[ny][nx]) continue
         visited[ny][nx] = true
-        prev.push([ny, nx])
-        dfs(prev, color)
-        prev.pop()
+        dfs(startY, startX, depth + 1, ny, nx, color)
         visited[ny][nx] = false
     }
 }
@@ -37,7 +33,7 @@ for (let i = 0; i < N; i++) {
             return
         }
         visited[i][j] = true
-        dfs([[i, j]], board[i][j])
+        dfs(i, j, 1, i, j, board[i][j])
         visited[i][j] = false
     }
 }
