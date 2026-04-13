@@ -12,18 +12,23 @@ for (const [nodeA, nodeB] of mainLineList) {
 }
 
 const result = new Array(N + 1).fill(-1)
-const visited = new Array(N + 1).fill(false)
 
-const search = (curr) => {
-    for (const next of graph[curr]) {
-        if (visited[next]) continue
-        result[next] = curr
-        visited[next] = true
-        search(next)
+const bfs = (curr) => {
+    const visited = new Array(N + 1).fill(false)
+    const queue = [curr]
+    let head = 0
+    visited[curr] = true
+    while (queue.length > head) {
+        const curr = queue[head++]
+        for (const next of graph[curr]) {
+            if (visited[next]) continue
+            result[next] = curr
+            visited[next] = true
+            queue.push(next)
+        }
     }
 }
-visited[1] = true
-search(1)
+bfs(1)
 for (const num of result.slice(2)) {
     console.log(num)
 }
