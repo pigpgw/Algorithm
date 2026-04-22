@@ -15,8 +15,10 @@ This is an auto push repository for Baekjoon Online Judge created with [Baekjoon
 |  |
 | ------- |
 | [0026-remove-duplicates-from-sorted-array](https://github.com/pigpgw/Algorithm/tree/master/0026-remove-duplicates-from-sorted-array) |
+| [0027-remove-element](https://github.com/pigpgw/Algorithm/tree/master/0027-remove-element) |
 ## Two Pointers
 |  |
 | ------- |
 | [0026-remove-duplicates-from-sorted-array](https://github.com/pigpgw/Algorithm/tree/master/0026-remove-duplicates-from-sorted-array) |
+| [0027-remove-element](https://github.com/pigpgw/Algorithm/tree/master/0027-remove-element) |
 <!---LeetCode Topics End-->
