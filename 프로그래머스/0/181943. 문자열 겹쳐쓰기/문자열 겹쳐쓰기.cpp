@@ -7,10 +7,7 @@ using namespace std;
 string solution(string my_string, string overwrite_string, int s) {
     string answer = "";
     // s ~ s + overwiret~len
-    answer = my_string;
-    for (int i = s; i < s + overwrite_string.length(); i++){
-        answer[i] = overwrite_string[i - s];
-    }
+    answer = my_string.replace(s,overwrite_string.length(),overwrite_string);
     cout << answer;
     
     return answer;
