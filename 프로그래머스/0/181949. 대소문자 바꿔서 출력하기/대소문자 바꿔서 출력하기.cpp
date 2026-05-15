@@ -9,11 +9,11 @@ int main(void) {
     cin >> str;
     
     string answer = "";
-    for (int i = 0; i < str.length(); i++){
-        if (isupper(str[i])){
-            answer += tolower(str[i]);
+    for (auto c : str){
+        if ('a' <= c && c <= 'z'){
+            answer += c - ('a' - 'A');
         } else {
-            answer += toupper(str[i]);
+            answer += c + ('a' - 'A');
         }
     }
     cout << answer << endl;
