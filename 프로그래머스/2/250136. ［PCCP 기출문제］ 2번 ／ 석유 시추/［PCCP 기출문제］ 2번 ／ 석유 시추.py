@@ -1,46 +1,40 @@
-# bfs로 그냥 한칸씩 해보기
-
-dx = [-1,0,1,0]
 dy = [0,-1,0,1]
+dx = [-1,0,1,0]
 
-def bfs (land,visited,starty,startx,N,M):
+def bfs(startx,starty,visited,land,n,m):
     queue = [[starty,startx]]
     visited[starty][startx] = True
-    head = 0
-    count = 0
-    cols = set()
-    while head < len(queue):
-        curry,currx = queue[head]
-        count += 1
-        head += 1
-        cols.add(currx)
+    count = 1
+    columns = set([startx])
+    while len(queue) > 0:
+        curry,currx = queue.pop(0)
+        
         for i in range(4):
             ny = curry + dy[i]
             nx = currx + dx[i]
-            if ny < 0 or ny >= N or nx < 0 or nx >= M:
+            if ny < 0 or ny >= n:
+                continue
+            if nx < 0 or nx >= m:
+                continue
+            if land[ny][nx] == 0:
                 continue
             if visited[ny][nx]:
                 continue
-            if land[ny][nx] != 1:
-                continue
-            visited[ny][nx] = True
+            count += 1
             queue.append([ny,nx])
-    return count,cols
-
-                
-        
+            columns.add(nx)
+            visited[ny][nx] = True
+    return columns, count
 
 def solution(land):
-    answer = 0
-    N = len(land)
-    M = len(land[0])
-    visited = [[False] * M for _ in range(N)]
-    oils = [0] * M
-    for i in range(M):
-        for j in range(len(land)):
+    n = len(land)
+    m = len(land[0])
+    oils = [0] * m
+    visited = [[False] * m for _ in range(n)]
+    for i in range(m):
+        for j in range(n):
             if land[j][i] == 1 and not visited[j][i]:
-                count,cols = bfs(land, visited, j, i, N, M)     
-                for col in cols:
-                    oils[col] += count
-
+                columns,oil = bfs(i,j,visited,land,n,m)
+                for column in columns:
+                    oils[column] += oil
     return max(oils)
